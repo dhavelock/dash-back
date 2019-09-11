@@ -1,1 +1,1 @@
-web: gunicorn dashtable-core.wsgi
+web: gunicorn dash-back.wsgi
