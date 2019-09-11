@@ -1,1 +1,1 @@
-web: gunicorn dash-back.wsgi
+web: gunicorn website.wsgi
