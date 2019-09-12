@@ -62,6 +62,7 @@ MIDDLEWARE = [
 # allow these sites 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
+    'https://dashboard.heroku.com'
 )
 
 ROOT_URLCONF = 'website.urls'
