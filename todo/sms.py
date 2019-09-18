@@ -31,26 +31,31 @@ class Sms():
         phone_number = sms.get('From', '')
         phone_number = phone_number[2:] # trim +1 extension
         profile = Profile.objects.get(phone_number=phone_number)
-        user = User.objects.get(profile=profile)
+        user = profile.user
 
         # get args
         body = sms.get('Body', '')
         args = body.split()
-
         list_name = args[1]
         title = args[2]
+
+        # get the user's lists
         lists = user.lists
+        listSerializer = ListSerializer(lists, many=True)
 
-        todo_list = None
+        todo_list_pk = None
 
-        for l in lists:
-            if l.name == list_name:
-                todo_list = l
+        # get list pk from the user's lists
+        for l in listSerializer.data:
+            if l['name'] == list_name:
+                todo_list_pk = l['id']
         
-        # create object and serializer
-        if todo_list is None:
+        # check if list exists
+        if todo_list_pk is None:
             return Response({"message": "list not found"}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Create the todo item
+        todo_list = TodoList.objects.get(pk=todo_list_pk)
         todoItem = TodoItem.objects.create(todolist=todo_list, title=title)
         itemSerializer = ItemSerializer(todoItem)
 
