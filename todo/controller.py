@@ -106,7 +106,7 @@ class Sms(APIView):
         sms = request.data.dict()
         print(sms)
 
-        body = sms.Body
+        body = sms.get('Body', '')
         args = body.split()
 
         if args[0] == 'add':
