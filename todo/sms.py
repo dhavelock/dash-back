@@ -35,7 +35,7 @@ class Sms():
 
         # get args
         body = sms.get('Body', '')
-        args = body.get.split()
+        args = body.split()
 
         list_name = args[1]
         title = args[2]
