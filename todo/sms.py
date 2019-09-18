@@ -36,8 +36,9 @@ class Sms():
         # get args
         body = sms.get('Body', '')
         args = body.split()
+        cmd = args[0]
         list_name = args[1]
-        title = args[2]
+        title = body[len(cmd) + len(list_name) + 2:] 
 
         # get the user's lists
         lists = user.lists
