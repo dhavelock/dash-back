@@ -106,8 +106,8 @@ class Sms(APIView):
         sms = request.data.dict()
         print(sms)
 
-        body = sms.body
-        args = sms.body.split()
+        body = sms.Body
+        args = body.split()
 
         if args[0] == 'add':
             sms.addTodoItem(args)
