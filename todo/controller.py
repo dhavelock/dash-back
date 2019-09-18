@@ -100,5 +100,6 @@ class Sms(APIView):
 
     def post(self, request):
         print('SMS')
-        print(request.data)
+        sms = request.data.dict()
+        print(sms)
         return Response(request.data, status=status.HTTP_200_OK)
