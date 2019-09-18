@@ -102,16 +102,16 @@ class Sms(APIView):
 
     def post(self, request):
         print('SMS')
-        sms = request.data.dict()
-        print(sms)
+        request = request.data.dict()
+        print(request)
 
-        body = sms.get('Body', '')
+        body = request.get('Body', '')
         cmd = body.split()[0]
 
         if cmd.lower() == 'add':
-            sms.addTodoItem(sms)
+            sms.addTodoItem(request)
 
         elif cmd.lower() == 'list':
-            sms.getLists(sms)
+            sms.getLists(request)
 
         return Response({"message": "success"}, status=status.HTTP_200_OK)
