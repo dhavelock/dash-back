@@ -94,3 +94,9 @@ class Item(APIView):
             "list": itemSerializer.data
         }
         return Response(response, status=status.HTTP_200_OK)
+
+class Sms(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        return Response(request.data, status=status.HTTP_200_OK)
