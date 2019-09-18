@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from twilio.twiml.messaging_response import MessagingResponse
-from sms import sms
+from todo.sms import sms
 
 class Lists(APIView):
     permission_classes = (permissions.AllowAny,)
