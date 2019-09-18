@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # added apps
     'todo.apps.TodoConfig',
+    'accounts.apps.AccountsConfig',
     # default
     'django.contrib.admin',
     'django.contrib.auth',

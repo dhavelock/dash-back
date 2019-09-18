@@ -8,6 +8,9 @@ from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from twilio.twiml.messaging_response import MessagingResponse
+from sms import sms
+
 class Lists(APIView):
     permission_classes = (permissions.AllowAny,)
 
@@ -102,4 +105,17 @@ class Sms(APIView):
         print('SMS')
         sms = request.data.dict()
         print(sms)
-        return Response(request.data, status=status.HTTP_200_OK)
+
+        body = sms.body
+        args = sms.body.split()
+
+        if args[0] == 'add':
+            sms.addTodoItem(args)
+
+        elif args[1] == 'list':
+            sms.getLists(args)
+
+        # Reply message
+        resp = MessagingResponse()
+        resp.message('Added Todo')
+        return str(resp)
