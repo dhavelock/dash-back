@@ -93,7 +93,7 @@ class Item(APIView):
 
         # send response
         response = {
-            "list": itemSerializer.data
+            "item": itemSerializer.data
         }
         return Response(response, status=status.HTTP_200_OK)
 
@@ -106,12 +106,12 @@ class Sms(APIView):
         print(sms)
 
         body = sms.get('Body', '')
-        args = body.split()
+        cmd = body.split()[0]
 
-        if args[0] == 'add':
-            sms.addTodoItem(args)
+        if cmd.lower() == 'add':
+            sms.addTodoItem(sms)
 
-        elif args[0] == 'list':
-            sms.getLists(args)
+        elif cmd.lower() == 'list':
+            sms.getLists(sms)
 
         return Response({"message": "success"}, status=status.HTTP_200_OK)
