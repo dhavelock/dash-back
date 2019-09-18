@@ -99,4 +99,6 @@ class Sms(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
+        print('SMS')
+        print(request.data)
         return Response(request.data, status=status.HTTP_200_OK)
