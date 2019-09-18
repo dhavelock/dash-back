@@ -47,7 +47,7 @@ class Sms():
 
         # get list pk from the user's lists
         for l in listSerializer.data:
-            if l['name'] == list_name:
+            if l['name'].lower() == list_name.lower():
                 todo_list_pk = l['id']
         
         # check if list exists
