@@ -60,7 +60,7 @@ class List(APIView):
 
         # send response
         response = {
-            "item": listSerializer.data
+            "list": listSerializer.data
         }
         return Response(response, status=status.HTTP_200_OK)
         
@@ -94,6 +94,24 @@ class Item(APIView):
         # send response
         response = {
             "item": itemSerializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+    def delete(self, request):
+        # get request data
+        item_pk = request.data.get('id', '')
+
+        # delete object
+        todoItem = TodoItem.objects.get(pk=item_pk)
+        todolist = todoItem.todolist
+        todoItem.delete()
+
+        # create serializer of list w/o item
+        listSerializer = ListSerializer(todolist)
+
+        # send response
+        response = {
+            "list": listSerializer.data,
         }
         return Response(response, status=status.HTTP_200_OK)
 
