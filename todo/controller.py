@@ -7,15 +7,17 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
 
 from todo.sms import sms
 
 class Lists(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
 
     def get(self, request):
         # get request data
-        user = User.objects.get(username='dylan.havelock@gmail.com') # request.user
+        user = request.user
         lists = user.lists
 
         # create serializer
@@ -29,12 +31,13 @@ class Lists(APIView):
 
 
 class List(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
 
     def get(self, request):
         # get request data
         list_id = request.data.get('list', None)
-        user = User.objects.get(username='dylan.havelock@gmail.com') # request.user
+        user = request.user
 
         # get objects from db
         todolist = get_object_or_404(TodoList, pk=list_id)
@@ -52,7 +55,7 @@ class List(APIView):
     def post(self, request):
         # get request data
         name = request.data.get('name', '')
-        user = User.objects.get(username='dylan.havelock@gmail.com') # request.user
+        user = request.user
 
         # create object and serializer
         todolist = TodoList.objects.create(name=name, user=user)
@@ -66,8 +69,10 @@ class List(APIView):
         
 
 class Item(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
 
+    # Get a Todo Item by ID
     def get(self, request):
         # get object and serializer
         item_id = request.data.get('item', None)
@@ -80,15 +85,17 @@ class Item(APIView):
         }
         return Response(response, status=status.HTTP_200_OK)
 
+    # Create a new Todo Item
     def post(self, request):
         # get request data
         list_id = request.data.get('list', None)
         todolist = get_object_or_404(TodoList, pk=list_id)
         title = request.data.get('title', '')
         description = request.data.get('description', '')
+        deadline = request.data.get('deadline', None)
 
         # create object and serializer
-        todoItem = TodoItem.objects.create(todolist=todolist, title=title, description=description)
+        todoItem = TodoItem.objects.create(todolist=todolist, title=title, description=description, deadline=deadline)
         itemSerializer = ItemSerializer(todoItem)
 
         # send response
@@ -97,6 +104,7 @@ class Item(APIView):
         }
         return Response(response, status=status.HTTP_200_OK)
 
+    # Delete a Todo Item by ID
     def delete(self, request):
         # get request data
         item_pk = request.data.get('id', '')

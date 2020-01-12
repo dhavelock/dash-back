@@ -17,6 +17,9 @@ from django.urls import include, path
 from django.contrib import admin
 
 urlpatterns = [
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('todo/', include('todo.urls')),
+    path('account/', include('accounts.urls')),
     path('admin/', admin.site.urls),
 ]

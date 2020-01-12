@@ -11,3 +11,7 @@ website/__pycache__/settings.cpython-36.pyc
 todo/__pycache__/urls.cpython-36.pyc
 todo/__pycache__/models.cpython-36.pyc
 todo/__pycache__/controller.cpython-36.pyc
+.DS_Store
+todo/__pycache__/
+todo/__pycache__/urls.cpython-36.pyc
+todo/__pycache__/controller.cpython-36.pyc
