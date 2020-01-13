@@ -66,6 +66,20 @@ class List(APIView):
             "list": listSerializer.data
         }
         return Response(response, status=status.HTTP_200_OK)
+
+    def delete(self, request):
+        # get request data
+        list_id = request.data.get('list', None)
+        user = request.user
+
+        print('list id', list_id)
+
+        # get list object
+        todolist = get_object_or_404(TodoList, pk=list_id)
+        print(todolist)
+        todolist.delete();
+
+        return Response({"message": "success"}, status=status.HTTP_200_OK)
         
 
 class Item(APIView):
