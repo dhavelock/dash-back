@@ -25,3 +25,13 @@ class Calendar(APIView):
         user.profile.save()
 
         return Response({'calendar_url': calendar_url}, status=status.HTTP_200_OK)
+
+class UserProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
+    def post(self, request):
+        user = request.user
+        profile = Profile.objects.create(user=user)
+
+        return Response({"message": "success"}, status=status.HTTP_200_OK)

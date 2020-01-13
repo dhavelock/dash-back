@@ -4,5 +4,6 @@ from . import controller
 app_name = 'account'
 
 urlpatterns = [
-    path('calendar/', controller.Calendar.as_view())
+    path('calendar/', controller.Calendar.as_view()),
+    path('profile/', controller.UserProfile.as_view())
 ]
