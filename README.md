@@ -1,7 +1,3 @@
 # dash-back
 
-<h2>Available Commands</h2>
-
-List - Gets a list of the current todo lists
-
-Add \<list name\> \<item title\> <*description> - Add a todo item to a list
+Listens to all of the todo + reminder text messages you send it via Twilio's SMS API and serves them via a REST API to be consumed by a React frontend
